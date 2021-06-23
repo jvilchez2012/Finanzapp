@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="UsuariosEditDlg" widgetVar="UsuariosEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditUsuariosTitle}" closeOnEscape="true">
+
+            <h:form id="UsuariosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{usuariosController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditUsuariosLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{usuariosController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditUsuariosLabel_nombre}" for="nombre" />
+                        <p:inputText id="nombre" value="#{usuariosController.selected.nombre}" title="#{myBundle.EditUsuariosTitle_nombre}" required="true" requiredMessage="#{myBundle.EditUsuariosRequiredMessage_nombre}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditUsuariosLabel_identificacion}" for="identificacion" />
+                        <p:inputText id="identificacion" value="#{usuariosController.selected.identificacion}" title="#{myBundle.EditUsuariosTitle_identificacion}" required="true" requiredMessage="#{myBundle.EditUsuariosRequiredMessage_identificacion}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditUsuariosLabel_limiteEgresos}" for="limiteEgresos" />
+                        <p:inputText id="limiteEgresos" value="#{usuariosController.selected.limiteEgresos}" title="#{myBundle.EditUsuariosTitle_limiteEgresos}" required="true" requiredMessage="#{myBundle.EditUsuariosRequiredMessage_limiteEgresos}"/>
+
+                        <p:outputLabel value="#{myBundle.EditUsuariosLabel_tipoPersona}" for="tipoPersona" />
+                        <p:inputText id="tipoPersona" value="#{usuariosController.selected.tipoPersona}" title="#{myBundle.EditUsuariosTitle_tipoPersona}" required="true" requiredMessage="#{myBundle.EditUsuariosRequiredMessage_tipoPersona}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditUsuariosLabel_fechaCorte}" for="fechaCorte" />
+                        <p:calendar id="fechaCorte" pattern="MM/dd/yyyy" value="#{usuariosController.selected.fechaCorte}" title="#{myBundle.EditUsuariosTitle_fechaCorte}" required="true" requiredMessage="#{myBundle.EditUsuariosRequiredMessage_fechaCorte}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditUsuariosLabel_estado}" for="estado" />
+                        <p:selectBooleanCheckbox id="estado" value="#{usuariosController.selected.estado}" required="true" requiredMessage="#{myBundle.EditUsuariosRequiredMessage_estado}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{usuariosController.save}" value="#{myBundle.Save}" update="display,:UsuariosListForm:datalist,:UsuariosListForm:UsuariosDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('UsuariosEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('UsuariosEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

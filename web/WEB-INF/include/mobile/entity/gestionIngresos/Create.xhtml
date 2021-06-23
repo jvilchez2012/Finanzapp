@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="GestionIngresosCreatePage" lazy="true">
+        <pm:header title="#{myBundle.CreateGestionIngresosTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:GestionIngresosListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="GestionIngresosCreateForm">
+
+                <h:panelGroup id="display" rendered="#{gestionIngresosController.selected != null}">
+                    <p:outputPanel>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateGestionIngresosLabel_descripcion}" for="descripcion" />
+                            <p:inputText id="descripcion" value="#{gestionIngresosController.selected.descripcion}" title="#{myBundle.CreateGestionIngresosTitle_descripcion}" required="true" requiredMessage="#{myBundle.CreateGestionIngresosRequiredMessage_descripcion}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateGestionIngresosLabel_fuente}" for="fuente" />
+                            <p:inputText id="fuente" value="#{gestionIngresosController.selected.fuente}" title="#{myBundle.CreateGestionIngresosTitle_fuente}" required="true" requiredMessage="#{myBundle.CreateGestionIngresosRequiredMessage_fuente}" size="255" maxlength="255"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateGestionIngresosLabel_estado}" for="estado" />
+                            <p:selectBooleanCheckbox id="estado" value="#{gestionIngresosController.selected.estado}" required="true" requiredMessage="#{myBundle.CreateGestionIngresosRequiredMessage_estado}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.CreateGestionIngresosLabel_idTipoIngreso}" for="idTipoIngreso" />
+                            <p:selectOneMenu id="idTipoIngreso" value="#{gestionIngresosController.selected.idTipoIngreso}" required="true" requiredMessage="#{myBundle.CreateGestionIngresosRequiredMessage_idTipoIngreso}" converter="tiposIngresosConverter">
+                                <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                                <f:selectItems value="#{tiposIngresosController.items}"
+                                               var="idTipoIngresoItem"
+                                               itemValue="#{idTipoIngresoItem}"
+                                               itemLabel="#{idTipoIngresoItem.descripcion.toString()}"
+                                               />
+
+                            </p:selectOneMenu>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{gestionIngresosController.saveNew}" value="#{myBundle.Save}" update="display,:GestionIngresosListPage:GestionIngresosListForm:datalist,:growl" action="#{mobilePageController.navigateWithHistory('pm:GestionIngresosListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

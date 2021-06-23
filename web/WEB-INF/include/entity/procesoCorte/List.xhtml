@@ -1,0 +1,123 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui">
+
+    <h:form id="ProcesoCorteListForm">
+
+        <p:panel header="#{myBundle.ListProcesoCorteTitle}">
+            <p:contextMenu id="ProcesoCorteDataTableContextMenu" for="datalist">  
+                <p:menuitem value="#{myBundle.Create}" onclick="document.getElementById('ProcesoCorteListForm:createButton').click();" icon="ui-icon-plus"/>
+                <p:menuitem value="#{myBundle.View}" onclick="document.getElementById('ProcesoCorteListForm:viewButton').click();" icon="ui-icon-search"/>
+                <p:menuitem value="#{myBundle.Edit}" onclick="document.getElementById('ProcesoCorteListForm:editButton').click();" icon="ui-icon-pencil"/>
+                <p:menuitem value="#{myBundle.Delete}" onclick="document.getElementById('ProcesoCorteListForm:deleteButton').click();" icon="ui-icon-trash"/>
+            </p:contextMenu>
+            <p:dataTable id="datalist"
+                         value="#{procesoCorteController.items}"
+                         lazy="false"
+                         rowKey="#{item.id}"
+                         var="item"
+                         paginator="true"
+                         rows="10"
+                         rowsPerPageTemplate="10,20,30,40,50"
+                         selectionMode="single"
+                         selection="#{procesoCorteController.selected}"
+                         filteredValue="#{procesoCorteController.filteredItems}">
+                <!--
+                         To enable Lazy Loading, please copy/replace the following lines above,
+                         and be sure to replace the word HASH with the # symbol:
+                
+                         value="HASH{procesoCorteController.lazyItems}"
+                         lazy="true"
+                         rowKey="HASH{item.id}"  <<< Remove this line
+                -->
+
+
+                <p:ajax event="rowSelect"   update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProcesoCorteDataTableContextMenu"/>
+                <p:ajax event="rowUnselect" update="@form:createButton,@form:viewButton,@form:editButton,@form:deleteButton,@form:ProcesoCorteDataTableContextMenu"/>
+                <p:ajax event="contextMenu" update="@form:createButton @form:viewButton @form:editButton @form:deleteButton"/>
+                <p:ajax event="rowDblselect" onsuccess="document.getElementById('ProcesoCorteListForm:viewButton').click();"/>
+
+                <p:column sortBy="#{item.id}" filterBy="#{item.id}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProcesoCorteTitle_id}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.id}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.year}" filterBy="#{item.year}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProcesoCorteTitle_year}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.year}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.mes}" filterBy="#{item.mes}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProcesoCorteTitle_mes}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.mes}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.fechaCorte}" filterBy="#{item.fechaCorte}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProcesoCorteTitle_fechaCorte}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.fechaCorte}">
+                        <f:convertDateTime pattern="MM/dd/yyyy" />
+                    </h:outputText>
+                </p:column>
+
+
+                <p:column sortBy="#{item.balanceInicial}" filterBy="#{item.balanceInicial}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProcesoCorteTitle_balanceInicial}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.balanceInicial}"/>
+                </p:column>
+
+
+                <p:column sortBy="#{item.totalIngresos}" filterBy="#{item.totalIngresos}">
+                    <f:facet name="header">
+                        <h:outputText value="#{myBundle.ListProcesoCorteTitle_totalIngresos}"/>
+                    </f:facet>
+                    <h:outputText value="#{item.totalIngresos}"/>
+                </p:column>
+
+                <ui:remove>
+                    <p:column sortBy="#{item.totalEgresos}" filterBy="#{item.totalEgresos}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListProcesoCorteTitle_totalEgresos}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.totalEgresos}"/>
+                    </p:column>
+                </ui:remove>
+                <ui:remove>
+                    <p:column sortBy="#{item.balanceCorte}" filterBy="#{item.balanceCorte}">
+                        <f:facet name="header">
+                            <h:outputText value="#{myBundle.ListProcesoCorteTitle_balanceCorte}"/>
+                        </f:facet>
+                        <h:outputText value="#{item.balanceCorte}"/>
+                    </p:column>
+                </ui:remove>
+
+            </p:dataTable>
+
+            <p:commandButton id="createButton"                             icon="ui-icon-plus"   value="#{myBundle.Create}" actionListener="#{procesoCorteController.prepareCreate}" update=":ProcesoCorteCreateForm" oncomplete="PF('ProcesoCorteCreateDialog').show()"/>
+            <p:commandButton id="viewButton"   style="visibility: hidden;" icon="ui-icon-search" value="#{myBundle.View}" update=":ProcesoCorteViewForm" oncomplete="PF('ProcesoCorteViewDialog').show()" disabled="#{empty procesoCorteController.selected}"/>
+            <p:commandButton id="editButton"   style="visibility: hidden;" icon="ui-icon-pencil" value="#{myBundle.Edit}" update=":ProcesoCorteEditForm" oncomplete="PF('ProcesoCorteEditDialog').show()" disabled="#{empty procesoCorteController.selected}"/>
+            <p:commandButton id="deleteButton" style="visibility: hidden;" icon="ui-icon-trash"  value="#{myBundle.Delete}" actionListener="#{procesoCorteController.delete}" update=":growl,datalist" disabled="#{empty procesoCorteController.selected}">
+                <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmDeleteMessage}" icon="ui-icon-alert"/>
+            </p:commandButton>
+
+        </p:panel>
+        <ui:include src="/WEB-INF/include/confirmation.xhtml"/>
+    </h:form>
+
+</ui:composition>

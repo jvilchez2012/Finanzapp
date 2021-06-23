@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:p="http://primefaces.org/ui"
+                xmlns:pm="http://primefaces.org/mobile">
+
+    <pm:page id="ProcesoCorteEditPage" lazy="true">
+        <pm:header title="#{myBundle.EditProcesoCorteTitle}">
+            <h:form>
+                <p:commandButton styleClass="ui-btn-left ui-btn-inline" value="#{myBundle.Cancel}" icon="ui-icon-arrow-l" action="#{mobilePageController.navigateBackInHistory('pm:ProcesoCorteListPage')}"/>
+            </h:form>
+        </pm:header>
+
+        <pm:content>
+
+            <h:form id="ProcesoCorteEditForm">
+
+                <h:panelGroup id="display">
+                    <p:outputPanel rendered="#{procesoCorteController.selected != null}">
+
+                        <pm:field>
+                            <h:outputLabel value="#{myBundle.EditProcesoCorteLabel_id}" for="id" />
+                            <h:outputText id="id" value="#{procesoCorteController.selected.id}" />
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_year}" for="year" />
+                            <p:inputText id="year" value="#{procesoCorteController.selected.year}" title="#{myBundle.EditProcesoCorteTitle_year}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_year}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_mes}" for="mes" />
+                            <p:inputText id="mes" value="#{procesoCorteController.selected.mes}" title="#{myBundle.EditProcesoCorteTitle_mes}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_mes}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_fechaCorte}" for="fechaCorte" />
+                            <p:calendar id="fechaCorte" pattern="MM/dd/yyyy" value="#{procesoCorteController.selected.fechaCorte}" title="#{myBundle.EditProcesoCorteTitle_fechaCorte}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_fechaCorte}" showOn="button"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_balanceInicial}" for="balanceInicial" />
+                            <p:inputText id="balanceInicial" value="#{procesoCorteController.selected.balanceInicial}" title="#{myBundle.EditProcesoCorteTitle_balanceInicial}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_balanceInicial}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_totalIngresos}" for="totalIngresos" />
+                            <p:inputText id="totalIngresos" value="#{procesoCorteController.selected.totalIngresos}" title="#{myBundle.EditProcesoCorteTitle_totalIngresos}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_totalIngresos}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_totalEgresos}" for="totalEgresos" />
+                            <p:inputText id="totalEgresos" value="#{procesoCorteController.selected.totalEgresos}" title="#{myBundle.EditProcesoCorteTitle_totalEgresos}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_totalEgresos}"/>
+                        </pm:field>
+
+                        <pm:field>
+                            <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_balanceCorte}" for="balanceCorte" />
+                            <p:inputText id="balanceCorte" value="#{procesoCorteController.selected.balanceCorte}" title="#{myBundle.EditProcesoCorteTitle_balanceCorte}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_balanceCorte}"/>
+                        </pm:field>
+                    </p:outputPanel>
+                    <p:commandButton actionListener="#{procesoCorteController.save}" value="#{myBundle.Save}" update="#{mobilePageController.updatableWidgets(component,'display,:ProcesoCorteListPage:ProcesoCorteListForm:datalist,:growl')}" action="#{mobilePageController.navigateWithHistory('pm:ProcesoCorteListPage')}"/>
+
+                </h:panelGroup>
+
+            </h:form>
+
+        </pm:content>
+
+    </pm:page>
+
+</ui:composition>

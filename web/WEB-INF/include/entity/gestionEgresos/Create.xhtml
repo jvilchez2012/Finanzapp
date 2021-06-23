@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="GestionEgresosCreateDlg" widgetVar="GestionEgresosCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateGestionEgresosTitle}" closeOnEscape="true">
+
+            <h:form id="GestionEgresosCreateForm">
+
+                <h:panelGroup id="display" rendered="#{gestionEgresosController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateGestionEgresosLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{gestionEgresosController.selected.descripcion}" title="#{myBundle.CreateGestionEgresosTitle_descripcion}" required="true" requiredMessage="#{myBundle.CreateGestionEgresosRequiredMessage_descripcion}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateGestionEgresosLabel_estado}" for="estado" />
+                        <p:selectBooleanCheckbox id="estado" value="#{gestionEgresosController.selected.estado}" required="true" requiredMessage="#{myBundle.CreateGestionEgresosRequiredMessage_estado}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateGestionEgresosLabel_idReglonEgreso}" for="idReglonEgreso" />
+                        <p:selectOneMenu id="idReglonEgreso" value="#{gestionEgresosController.selected.idReglonEgreso}" required="true" requiredMessage="#{myBundle.CreateGestionEgresosRequiredMessage_idReglonEgreso}" converter="renglonesEgresosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{renglonesEgresosController.items}"
+                                           var="idReglonEgresoItem"
+                                           itemValue="#{idReglonEgresoItem}"
+                                           itemLabel="#{idReglonEgresoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateGestionEgresosLabel_idTipoEgreso}" for="idTipoEgreso" />
+                        <p:selectOneMenu id="idTipoEgreso" value="#{gestionEgresosController.selected.idTipoEgreso}" required="true" requiredMessage="#{myBundle.CreateGestionEgresosRequiredMessage_idTipoEgreso}" converter="tiposEgresosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tiposEgresosController.items}"
+                                           var="idTipoEgresoItem"
+                                           itemValue="#{idTipoEgresoItem}"
+                                           itemLabel="#{idTipoEgresoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateGestionEgresosLabel_idTipoPago}" for="idTipoPago" />
+                        <p:selectOneMenu id="idTipoPago" value="#{gestionEgresosController.selected.idTipoPago}" required="true" requiredMessage="#{myBundle.CreateGestionEgresosRequiredMessage_idTipoPago}" converter="tiposPagosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tiposPagosController.items}"
+                                           var="idTipoPagoItem"
+                                           itemValue="#{idTipoPagoItem}"
+                                           itemLabel="#{idTipoPagoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{gestionEgresosController.saveNew}" value="#{myBundle.Save}" update="display,:GestionEgresosListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('GestionEgresosCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('GestionEgresosCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

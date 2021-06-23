@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="GestionEgresosViewDlg" widgetVar="GestionEgresosViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewGestionEgresosTitle}" closeOnEscape="true">
+
+            <h:form id="GestionEgresosViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{gestionEgresosController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewGestionEgresosLabel_id}"/>
+                        <h:outputText value="#{gestionEgresosController.selected.id}" title="#{myBundle.ViewGestionEgresosTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewGestionEgresosLabel_descripcion}"/>
+                        <h:outputText value="#{gestionEgresosController.selected.descripcion}" title="#{myBundle.ViewGestionEgresosTitle_descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewGestionEgresosLabel_estado}"/>
+                        <p:selectBooleanCheckbox id="estado" value="#{gestionEgresosController.selected.estado}" title="#{myBundle.EditGestionEgresosTitle_estado}" required="true" requiredMessage="#{myBundle.EditGestionEgresosRequiredMessage_estado}"/>
+
+                        <h:outputText value="#{myBundle.ViewGestionEgresosLabel_idReglonEgreso}"/>
+                        <h:outputText value="#{gestionEgresosController.selected.idReglonEgreso.descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewGestionEgresosLabel_idTipoEgreso}"/>
+                        <h:outputText value="#{gestionEgresosController.selected.idTipoEgreso.descripcion}"/>
+
+                        <h:outputText value="#{myBundle.ViewGestionEgresosLabel_idTipoPago}"/>
+                        <h:outputText value="#{gestionEgresosController.selected.idTipoPago.descripcion}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('GestionEgresosViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

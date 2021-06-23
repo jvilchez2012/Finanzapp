@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="RegistroTransaccionesCreateDlg" widgetVar="RegistroTransaccionesCreateDialog" modal="true" resizable="false" appendTo="@(body)" header="#{myBundle.CreateRegistroTransaccionesTitle}" closeOnEscape="true">
+
+            <h:form id="RegistroTransaccionesCreateForm">
+
+                <h:panelGroup id="display" rendered="#{registroTransaccionesController.selected != null}">
+                    <p:panelGrid columns="2" columnClasses="column">
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroTransaccionesLabel_tipoTransaccion}" for="tipoTransaccion" />
+                        <p:inputText id="tipoTransaccion" value="#{registroTransaccionesController.selected.tipoTransaccion}" title="#{myBundle.CreateRegistroTransaccionesTitle_tipoTransaccion}" required="true" requiredMessage="#{myBundle.CreateRegistroTransaccionesRequiredMessage_tipoTransaccion}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroTransaccionesLabel_fechaTransaccion}" for="fechaTransaccion" />
+                        <p:calendar id="fechaTransaccion" pattern="MM/dd/yyyy" value="#{registroTransaccionesController.selected.fechaTransaccion}" title="#{myBundle.CreateRegistroTransaccionesTitle_fechaTransaccion}" required="true" requiredMessage="#{myBundle.CreateRegistroTransaccionesRequiredMessage_fechaTransaccion}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroTransaccionesLabel_fechaRegistro}" for="fechaRegistro" />
+                        <p:calendar id="fechaRegistro" pattern="MM/dd/yyyy" value="#{registroTransaccionesController.selected.fechaRegistro}" title="#{myBundle.CreateRegistroTransaccionesTitle_fechaRegistro}" required="true" requiredMessage="#{myBundle.CreateRegistroTransaccionesRequiredMessage_fechaRegistro}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroTransaccionesLabel_montoTransaccion}" for="montoTransaccion" />
+                        <p:inputText id="montoTransaccion" value="#{registroTransaccionesController.selected.montoTransaccion}" title="#{myBundle.CreateRegistroTransaccionesTitle_montoTransaccion}" required="true" requiredMessage="#{myBundle.CreateRegistroTransaccionesRequiredMessage_montoTransaccion}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroTransaccionesLabel_noTDC}" for="noTDC" />
+                        <p:inputText id="noTDC" value="#{registroTransaccionesController.selected.noTDC}" title="#{myBundle.CreateRegistroTransaccionesTitle_noTDC}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroTransaccionesLabel_comentario}" for="comentario" />
+                        <p:inputText id="comentario" value="#{registroTransaccionesController.selected.comentario}" title="#{myBundle.CreateRegistroTransaccionesTitle_comentario}" required="true" requiredMessage="#{myBundle.CreateRegistroTransaccionesRequiredMessage_comentario}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroTransaccionesLabel_estado}" for="estado" />
+                        <p:selectBooleanCheckbox id="estado" value="#{registroTransaccionesController.selected.estado}" required="true" requiredMessage="#{myBundle.CreateRegistroTransaccionesRequiredMessage_estado}"/>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroTransaccionesLabel_idTipoPago}" for="idTipoPago" />
+                        <p:selectOneMenu id="idTipoPago" value="#{registroTransaccionesController.selected.idTipoPago}" required="true" requiredMessage="#{myBundle.CreateRegistroTransaccionesRequiredMessage_idTipoPago}" converter="tiposPagosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tiposPagosController.items}"
+                                           var="idTipoPagoItem"
+                                           itemValue="#{idTipoPagoItem}"
+                                           itemLabel="#{idTipoPagoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+
+                        <p:outputLabel value="#{myBundle.CreateRegistroTransaccionesLabel_idUsuario}" for="idUsuario" />
+                        <p:selectOneMenu id="idUsuario" value="#{registroTransaccionesController.selected.idUsuario}" required="true" requiredMessage="#{myBundle.CreateRegistroTransaccionesRequiredMessage_idUsuario}" converter="usuariosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{usuariosController.items}"
+                                           var="idUsuarioItem"
+                                           itemValue="#{idUsuarioItem}"
+                                           itemLabel="#{idUsuarioItem.id.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{registroTransaccionesController.saveNew}" value="#{myBundle.Save}" update="display,:RegistroTransaccionesListForm:datalist,:growl" oncomplete="handleSubmit(xhr,status,args,PF('RegistroTransaccionesCreateDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmCreateMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('RegistroTransaccionesCreateDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProcesoCorteViewDlg" widgetVar="ProcesoCorteViewDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.ViewProcesoCorteTitle}" closeOnEscape="true">
+
+            <h:form id="ProcesoCorteViewForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" columnClasses="column" rendered="#{procesoCorteController.selected != null}">
+
+                        <h:outputText value="#{myBundle.ViewProcesoCorteLabel_id}"/>
+                        <h:outputText value="#{procesoCorteController.selected.id}" title="#{myBundle.ViewProcesoCorteTitle_id}"/>
+
+                        <h:outputText value="#{myBundle.ViewProcesoCorteLabel_year}"/>
+                        <h:outputText value="#{procesoCorteController.selected.year}" title="#{myBundle.ViewProcesoCorteTitle_year}"/>
+
+                        <h:outputText value="#{myBundle.ViewProcesoCorteLabel_mes}"/>
+                        <h:outputText value="#{procesoCorteController.selected.mes}" title="#{myBundle.ViewProcesoCorteTitle_mes}"/>
+
+                        <h:outputText value="#{myBundle.ViewProcesoCorteLabel_fechaCorte}"/>
+                        <h:outputText value="#{procesoCorteController.selected.fechaCorte}" title="#{myBundle.ViewProcesoCorteTitle_fechaCorte}">
+                            <f:convertDateTime pattern="MM/dd/yyyy" />
+                        </h:outputText>
+
+                        <h:outputText value="#{myBundle.ViewProcesoCorteLabel_balanceInicial}"/>
+                        <h:outputText value="#{procesoCorteController.selected.balanceInicial}" title="#{myBundle.ViewProcesoCorteTitle_balanceInicial}"/>
+
+                        <h:outputText value="#{myBundle.ViewProcesoCorteLabel_totalIngresos}"/>
+                        <h:outputText value="#{procesoCorteController.selected.totalIngresos}" title="#{myBundle.ViewProcesoCorteTitle_totalIngresos}"/>
+
+                        <h:outputText value="#{myBundle.ViewProcesoCorteLabel_totalEgresos}"/>
+                        <h:outputText value="#{procesoCorteController.selected.totalEgresos}" title="#{myBundle.ViewProcesoCorteTitle_totalEgresos}"/>
+
+                        <h:outputText value="#{myBundle.ViewProcesoCorteLabel_balanceCorte}"/>
+                        <h:outputText value="#{procesoCorteController.selected.balanceCorte}" title="#{myBundle.ViewProcesoCorteTitle_balanceCorte}"/>
+                    </p:panelGrid>
+                    <p:commandButton value="#{myBundle.Close}" onclick="PF('ProcesoCorteViewDialog').hide()"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="GestionIngresosEditDlg" widgetVar="GestionIngresosEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditGestionIngresosTitle}" closeOnEscape="true">
+
+            <h:form id="GestionIngresosEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{gestionIngresosController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditGestionIngresosLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{gestionIngresosController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditGestionIngresosLabel_descripcion}" for="descripcion" />
+                        <p:inputText id="descripcion" value="#{gestionIngresosController.selected.descripcion}" title="#{myBundle.EditGestionIngresosTitle_descripcion}" required="true" requiredMessage="#{myBundle.EditGestionIngresosRequiredMessage_descripcion}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditGestionIngresosLabel_fuente}" for="fuente" />
+                        <p:inputText id="fuente" value="#{gestionIngresosController.selected.fuente}" title="#{myBundle.EditGestionIngresosTitle_fuente}" required="true" requiredMessage="#{myBundle.EditGestionIngresosRequiredMessage_fuente}" size="255" maxlength="255"/>
+
+                        <p:outputLabel value="#{myBundle.EditGestionIngresosLabel_estado}" for="estado" />
+                        <p:selectBooleanCheckbox id="estado" value="#{gestionIngresosController.selected.estado}" required="true" requiredMessage="#{myBundle.EditGestionIngresosRequiredMessage_estado}"/>
+
+                        <p:outputLabel value="#{myBundle.EditGestionIngresosLabel_idTipoIngreso}" for="idTipoIngreso" />
+                        <p:selectOneMenu id="idTipoIngreso" value="#{gestionIngresosController.selected.idTipoIngreso}" required="true" requiredMessage="#{myBundle.EditGestionIngresosRequiredMessage_idTipoIngreso}" converter="tiposIngresosConverter">
+                            <f:selectItem itemLabel="#{myBundle.SelectOneMessage}"/>
+                            <f:selectItems value="#{tiposIngresosController.items}"
+                                           var="idTipoIngresoItem"
+                                           itemValue="#{idTipoIngresoItem}"
+                                           itemLabel="#{idTipoIngresoItem.descripcion.toString()}"
+                                           />
+
+                        </p:selectOneMenu>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{gestionIngresosController.save}" value="#{myBundle.Save}" update="display,:GestionIngresosListForm:datalist,:GestionIngresosListForm:GestionIngresosDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('GestionIngresosEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('GestionIngresosEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>

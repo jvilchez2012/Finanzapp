@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://java.sun.com/jsf/facelets"
+      xmlns:h="http://java.sun.com/jsf/html"
+      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+        <p:dialog id="ProcesoCorteEditDlg" widgetVar="ProcesoCorteEditDialog" modal="true" resizable="false"  appendTo="@(body)" header="#{myBundle.EditProcesoCorteTitle}" closeOnEscape="true">
+
+            <h:form id="ProcesoCorteEditForm">
+
+                <h:panelGroup id="display">
+                    <p:panelGrid  columns="2" columnClasses="column" rendered="#{procesoCorteController.selected != null}">
+
+
+                        <h:outputLabel value="#{myBundle.EditProcesoCorteLabel_id}" for="id" />
+                        <h:outputText id="id" value="#{procesoCorteController.selected.id}" />
+
+                        <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_year}" for="year" />
+                        <p:inputText id="year" value="#{procesoCorteController.selected.year}" title="#{myBundle.EditProcesoCorteTitle_year}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_year}"/>
+
+                        <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_mes}" for="mes" />
+                        <p:inputText id="mes" value="#{procesoCorteController.selected.mes}" title="#{myBundle.EditProcesoCorteTitle_mes}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_mes}"/>
+
+                        <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_fechaCorte}" for="fechaCorte" />
+                        <p:calendar id="fechaCorte" pattern="MM/dd/yyyy" value="#{procesoCorteController.selected.fechaCorte}" title="#{myBundle.EditProcesoCorteTitle_fechaCorte}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_fechaCorte}" showOn="button"/>
+
+                        <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_balanceInicial}" for="balanceInicial" />
+                        <p:inputText id="balanceInicial" value="#{procesoCorteController.selected.balanceInicial}" title="#{myBundle.EditProcesoCorteTitle_balanceInicial}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_balanceInicial}"/>
+
+                        <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_totalIngresos}" for="totalIngresos" />
+                        <p:inputText id="totalIngresos" value="#{procesoCorteController.selected.totalIngresos}" title="#{myBundle.EditProcesoCorteTitle_totalIngresos}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_totalIngresos}"/>
+
+                        <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_totalEgresos}" for="totalEgresos" />
+                        <p:inputText id="totalEgresos" value="#{procesoCorteController.selected.totalEgresos}" title="#{myBundle.EditProcesoCorteTitle_totalEgresos}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_totalEgresos}"/>
+
+                        <p:outputLabel value="#{myBundle.EditProcesoCorteLabel_balanceCorte}" for="balanceCorte" />
+                        <p:inputText id="balanceCorte" value="#{procesoCorteController.selected.balanceCorte}" title="#{myBundle.EditProcesoCorteTitle_balanceCorte}" required="true" requiredMessage="#{myBundle.EditProcesoCorteRequiredMessage_balanceCorte}"/>
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{procesoCorteController.save}" value="#{myBundle.Save}" update="display,:ProcesoCorteListForm:datalist,:ProcesoCorteListForm:ProcesoCorteDataTableContextMenu,:growl" oncomplete="handleSubmit(xhr,status,args,PF('ProcesoCorteEditDialog'));">
+                        <p:confirm header="#{myBundle.ConfirmationHeader}" message="#{myBundle.ConfirmEditMessage}" icon="ui-icon-alert"/>
+                    </p:commandButton>
+                    <p:commandButton value="#{myBundle.Cancel}" oncomplete="PF('ProcesoCorteEditDialog').hide()" update="display" process="@this" immediate="true" resetValues="true"/>
+                </h:panelGroup>
+
+            </h:form>
+
+        </p:dialog>
+
+    </ui:composition>
+
+</html>
