@@ -1,5 +1,5 @@
 # Finanzapp
-# Hecho por:
-# kenny Cuevas
-# Dana Cruz
-# Jonathan Vilchez
+Hecho por:
+- Kenny Cuevas
+- Dana Cruz
+- Jonathan Vilchez
